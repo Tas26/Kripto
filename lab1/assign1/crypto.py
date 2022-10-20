@@ -9,6 +9,7 @@ SUNet: <SUNet ID>
 
 Replace this with a description of the program.
 """
+from unittest import result
 import utils
 
 # Caesar Cipher
@@ -18,7 +19,12 @@ def encrypt_caesar(plaintext):
 
     Add more implementation details here.
     """
-    raise NotImplementedError  # Your implementation here
+    result = ''
+    for i in range(len(plaintext)):
+        result += chr((ord(plaintext[i]) + 3 - 65) % 26 + 65)
+ 
+    return result
+
 
 
 def decrypt_caesar(ciphertext):
@@ -128,3 +134,9 @@ def decrypt_mh(message, private_key):
     """
     raise NotImplementedError  # Your implementation here
 
+
+def main():
+    print(encrypt_caesar('PYTHON'))
+
+if __name__ == "__main__":
+    main()
