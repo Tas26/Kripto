@@ -98,6 +98,88 @@ def decrypt_scytale(ciphertext, circumference):
         decrypted += str(result[i])        
     return decrypted     
 
+# Railfence Cipher
+
+
+def encrypt_railfence(plaintext, num_rails):
+
+    matrix = [[' ' for i in range(len(plaintext))] for j in range(num_rails)]
+
+    direction = 0
+    row = 0
+    for i in range(len(plaintext)):
+        matrix[row][i] = plaintext[i]
+        if row == num_rails-1:
+            direction = 1
+        elif row == 0:
+            direction = 0
+
+        if direction == 0:
+            row = row + 1
+        else: row = row - 1
+
+    # for i in range(0, num_rails):
+    #     print(matrix[i], ' ')     
+
+    crypted = ''
+    for i in range(0, num_rails):
+        for j in range(0, len(plaintext)):
+            if matrix[i][j] != ' ':
+                crypted += str(matrix[i][j])
+
+    return crypted
+
+def decrypt_railfence(ciphertext, num_rails):
+
+    matrix = [[' ' for i in range(len(ciphertext))] for j in range(num_rails)]
+
+    direction = 0
+    row, col = 0, 0
+
+    # Making the zigzag pattern and mark the spots
+    for i in range(len(ciphertext)):
+        if row == 0:
+            direction = 1
+        if row == num_rails - 1:
+            direction = 0
+ 
+        matrix[row][col] = '+'
+        col += 1
+
+        if direction:
+            row += 1
+        else:
+            row -= 1  
+
+    # biuld the zigzag matrix
+    index = 0
+    for i in range(num_rails):
+        for j in range(len(ciphertext)):
+            if ((matrix[i][j] == '+') and
+               (index < len(ciphertext))):
+                matrix[i][j] = ciphertext[index]
+                index += 1            
+
+    # Read zigzag the matrix
+    decrypted = ''
+    row = 0
+    col = 0 
+    for i in range(len(ciphertext)):
+        if row == 0:
+            direction = 1
+        if row == num_rails-1:
+            direction = 0
+             
+        if (matrix[row][col] != ' '):
+            decrypted += str(matrix[row][col])
+            col += 1
+             
+        if direction:
+            row += 1
+        else:
+            row -= 1
+    return decrypted    
+
 # Merkle-Hellman Knapsack Cryptosystem
 
 def generate_private_key(n=8):
@@ -181,8 +263,9 @@ def decrypt_mh(message, private_key):
 
 
 def main():
-    print(encrypt_scytale('IAMHURTVERYBADLYHELP', 5))
-    print(decrypt_scytale('IRYYATBHMVAEHEDLURLP', 5))
+    print(encrypt_railfence('WEAREDISCOVEREDFLEEATONCE', 3))
+    print(decrypt_railfence('WECRLTEERDSOEEFEAOCAIVDEN', 3))
+    
    
 
 if __name__ == "__main__":
