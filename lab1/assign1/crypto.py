@@ -9,6 +9,7 @@ SUNet: <SUNet ID>
 
 Replace this with a description of the program.
 """
+from pydoc import plain
 from unittest import result
 import utils
 
@@ -46,7 +47,15 @@ def encrypt_vigenere(plaintext, keyword):
 
     Add more implementation details here.
     """
-    raise NotImplementedError  # Your implementation here
+    result =''
+    plaintext = plaintext.upper()
+    keyword = keyword.upper()
+    length = len(keyword)
+    for i in range(0, len(plaintext)):
+        c = plaintext[i]
+        k = keyword[i % length]
+        result += chr((ord(c) - 65 + ord(k) - 65) % 26 + 65)
+    return result    
 
 
 def decrypt_vigenere(ciphertext, keyword):
@@ -54,7 +63,15 @@ def decrypt_vigenere(ciphertext, keyword):
 
     Add more implementation details here.
     """
-    raise NotImplementedError  # Your implementation here
+    result =''
+    ciphertext = ciphertext.upper()
+    keyword = keyword.upper()
+    length = len(keyword)
+    for i in range(0, len(ciphertext)):
+        c = ciphertext[i]
+        k = keyword[i % length]
+        result += chr((ord(c) - 65 - ord(k) - 65) % 26 + 65)
+    return result    
 
 
 # Merkle-Hellman Knapsack Cryptosystem
@@ -140,8 +157,9 @@ def decrypt_mh(message, private_key):
 
 
 def main():
-    print(encrypt_caesar('PYTHON'))
-    print(decrypt_caesar('SBWKRQ'))
+    print(encrypt_vigenere('Attackatdawn', 'LEMON'))
+    print(decrypt_vigenere('LXFOPVEFRNHR', 'LEMON'))
+   
 
 if __name__ == "__main__":
     main()
