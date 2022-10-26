@@ -9,6 +9,7 @@ SUNet: <SUNet ID>
 
 Replace this with a description of the program.
 """
+from math import ceil
 from pydoc import plain
 from unittest import result
 import utils
@@ -73,6 +74,29 @@ def decrypt_vigenere(ciphertext, keyword):
         result += chr((ord(c) - 65 - ord(k) - 65) % 26 + 65)
     return result    
 
+
+# Scytale Cipher
+
+def encrypt_scytale(plaintext, circumference):
+    result = []
+    for k in range(0, circumference):
+        for i in range(0, ceil(len(plaintext)/circumference)):
+            result.insert(i + (k*(ceil(len(plaintext)/circumference))), plaintext[(i*circumference)+k])
+    crypted = ''
+    for i in range(0, len(result)):
+        crypted += str(result[i])        
+    return crypted        
+
+
+def decrypt_scytale(ciphertext, circumference):
+    result = []
+    for k in range(0, ceil(len(ciphertext)/circumference)):
+        for i in range(0,  circumference):
+            result.insert(i + (k*circumference), ciphertext[(i*(ceil(len(ciphertext)/circumference))) + k])
+    decrypted = ''
+    for i in range(0, len(result)):
+        decrypted += str(result[i])        
+    return decrypted     
 
 # Merkle-Hellman Knapsack Cryptosystem
 
@@ -157,8 +181,8 @@ def decrypt_mh(message, private_key):
 
 
 def main():
-    print(encrypt_vigenere('Attackatdawn', 'LEMON'))
-    print(decrypt_vigenere('LXFOPVEFRNHR', 'LEMON'))
+    print(encrypt_scytale('IAMHURTVERYBADLYHELP', 5))
+    print(decrypt_scytale('IRYYATBHMVAEHEDLURLP', 5))
    
 
 if __name__ == "__main__":
