@@ -116,10 +116,7 @@ def encrypt_railfence(plaintext, num_rails):
 
         if direction == 0:
             row = row + 1
-        else: row = row - 1
-
-    # for i in range(0, num_rails):
-    #     print(matrix[i], ' ')     
+        else: row = row - 1 
 
     crypted = ''
     for i in range(0, num_rails):
@@ -260,13 +257,3 @@ def decrypt_mh(message, private_key):
     @return bytearray or str of decrypted characters
     """
     raise NotImplementedError  # Your implementation here
-
-
-def main():
-    print(encrypt_railfence('WEAREDISCOVEREDFLEEATONCE', 3))
-    print(decrypt_railfence('WECRLTEERDSOEEFEAOCAIVDEN', 3))
-    
-   
-
-if __name__ == "__main__":
-    main()
